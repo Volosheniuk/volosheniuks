@@ -8,7 +8,7 @@
 
 
 	format_string:
-	.string	"Hello world %d %d %d\n"
+	.string	"Hello world %d%d%d\n"
 .text
 	.globl	main
 main:
