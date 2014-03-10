@@ -2,12 +2,13 @@
 	int_label1:
 	.int	3
 	int_label2:
-	.int	4
+	.int	2
 	int_label3:
-	.int   5
+	.int   1
+
 
 	format_string:
-	.string	"Hello world %d %d %d\n"
+	.string	"Hello world %d%d%d\n"
 .text
 	.globl	main
 main:
