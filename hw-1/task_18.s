@@ -1,69 +1,58 @@
  .data
-int_label1: 
+
+int_label: 
 	.space 4
-int_label2:
-	.space 4
-scannn_string:
-	.string "%d %d"
+
+mescanfff:
+	.string "%d"
 	.text
-printfff_string:
-	.string "%d\n"
+meprintfff:
+	.string "Syma 1..N =%d\n"
 	.text
 	.globl main
+
 main:
+//prolog
 	pushl %ebp
 	movl %esp,%ebp
-	
-	pushl $int_label2
-	pushl $int_label1
-	pushl $scannn_string
-	call  scanf
-      
-        addl  $12, %esp
-	
 
-	movl int_label2 ,%eax
-	addl int_label1,  %eax
-	
+//scan data
+	pushl $int_label
+	pushl $mescanfff
+	call scanf
+	addl $8,%esp
 
+	movl $0, %eax
+	movl int_label, %ebx
+
+	cmp $0,%ebx
+	jne loop_start
+		movl $0,%eax
+		jmp mypr
+	loop_start:
+		cmp $0,%ebx
+		jne letsdoit
+			jmp loop_end
+		letsdoit: 
+		 	addl %ebx, %eax
+			dec %ebx
+			jmp loop_start
+	loop_end: jmp mypr
+
+
+mypr: 
 	pushl %eax
-	pushl $printfff_string
+	pushl $meprintfff
 	call printf
-        
-
-	addl $8, %esp
-	
-
-	movl int_label1,%eax
-	sub  int_label2, %eax
-	
-
-	pushl %eax
-        pushl $printfff_string
-        call printf
-        
-        addl $8, %esp
-	
-	movl int_label1, %eax
-	mull int_label2
+	addl $8,%esp
 
 
-        pushl %eax
-        pushl $printfff_string
-        call printf
-	
 
-        addl $8, %esp
-
-
-	
+//make stack well
 	movl %esp,%ebp
 	popl %ebp
 
 	movl $0, %eax
-	
-	ret
- 
-
+ret
 
         
