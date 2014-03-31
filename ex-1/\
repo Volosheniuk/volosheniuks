@@ -1,0 +1,36 @@
+ .data
+int_a:
+	.space 4
+int_b:
+	.space 4
+scanstring:
+	.string "%d %d"
+	.text
+printstring:
+	.string "%d\n"
+	.text
+	.globl main
+main:
+//prolog
+	pushl	%ebp
+	movl	%esp, %ebp
+
+	pushl  $int_b
+	pushl  $int_a
+	pushl  $scanstring
+	call scanf
+	addl  $12, %esp
+
+	movl  int_a, %eax
+	movl  int_b, %ebx
+	addl  %ebx,%eax
+
+	
+	pushl %eax
+	pushl %printstring
+	call printf
+
+	movl	%ebp, %esp
+	popl	%ebp
+	movl $0, %eax
+	ret
