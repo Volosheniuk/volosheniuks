@@ -7,7 +7,7 @@ scanstring:
 	.string "%d %d"
 	.text
 cheker1:
-	.string "perepolnenie\n"
+	.string "%d +2^32\n"
 printstring:
 	.string "%d\n"
 	.text
@@ -40,7 +40,7 @@ main:
 			subl $1073741824, %edx
                     	movl %edx,%eax
 			dec %eax
-			jmp pr
+			jmp pr1
 		bolshe: 
 		    movl %eax,%edx
 		    subl $1073741824, %edx
@@ -48,7 +48,7 @@ main:
 		    subl  $1073741824, %edx
 		    movl %edx,%eax
 		    dec %eax
-		    jmp  pr
+		    jmp  pr1
 	
 letsdo:	
 	addl %ebx,%eax
@@ -57,6 +57,15 @@ pr:
 	pushl %eax
 	pushl $printstring
 	call printf
+	addl $8,%esp
+	jmp end
+pr1:	
+	pushl %eax
+	pushl $cheker1
+	call printf
+	addl $8,%esp
+	jmp end
+	
 end:
 	movl	%ebp, %esp
 	popl	%ebp
