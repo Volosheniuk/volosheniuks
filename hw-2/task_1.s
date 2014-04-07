@@ -1,14 +1,15 @@
  .data
 
-myint:.space 4
+myint:
+	.long 0
 read_chislo:
-	.string "%d "
+	.string "%d"
 	.text
 wright_otvet1:
-	.string "Kolichestvo edenits %d"
+	.string "Kolichestvo edenits %d\n"
 	.text
 wright_otvet2:
-
+	.string "NOT chislo=%d"
 
 	.globl main
 main:
@@ -22,13 +23,13 @@ main:
 		call scanf
 		addl $8, %esp
 // schitaem kolichestvo edenichnih bitov
-		movl $myint,%eax
+		movl (myint),%eax
 		movl $32, %ecx
 		xorl %edx, %edx 
 count:
 		shll %eax 
 		jnc no_carry
-			inc %edx
+			incl %edx
 		no_carry:
 		loop count
 //print 1resalt
@@ -38,6 +39,17 @@ count:
 		addl $8,%esp
 
 //epilog
+
+//part2  printf not a
+		movl (myint) ,%eax
+		not %eax
+		pushl %eax
+		pushl $wright_otvet2
+		call printf
+		addl $8,%esp
+		
+
+
 		movl	%ebp, %esp
 		popl	%ebp
 		movl $0,%eax
