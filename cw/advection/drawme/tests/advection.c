@@ -1,9 +1,13 @@
 #include <stdio.h>
 #define NMAX 16000
+#include <stdio.h>
+#include "drawme.h"
+
 	
 //global
 	double mas1[NMAX+1];
         double mas2[NMAX+1];
+	double xmasx[10]={-1,-0.8,-0.4,-0.2,0,0.2,0.4,0.6,0.8,1};
 //end global
 
 
@@ -66,10 +70,13 @@ int main(){
 	int j;
 	int M=10;//kolichestvo >>
 	//>>
-	p=&mas1[0];
+	p=&mas2[0];
 	for (j=0;j<=M;j++){
 		changeme(N,h,cw);
+		DM_plot_1d(xmasx, mas2, N, "Test 1", 0);
+	        DM_plot_1d(xmasx,mas2 , N, "Test 1", 1);
 		ccopp(N);
+		printf("\n");
 	}
 
 return 0;

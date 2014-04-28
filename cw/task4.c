@@ -10,8 +10,10 @@ double dst[10] = {0, };
 #pragma omp for
 for (ind = 0; ind < 10; ind++)
 {
-printf(" %d", ind);
-dst[ind] = pow(src[ind], 2.0f);
+	int x=100500;
+	printf("%d",x);
+	printf(" %d", ind);
+	dst[ind] = pow(src[ind], 2.0f);
 }
 }
 printf("\n");
