@@ -14,7 +14,7 @@ strstr:
 ennd:
 	.string "\n"
 cheker:
-	.string "%d"
+	.string "%d\n"
 fmt_str:
 	.string "%c"
 a:
@@ -23,10 +23,17 @@ count:
 	.space 4
 ptr:
 	.space 4
+myflag:
+	.space 4
+countA:
+	.space 4
+counta:
+	.space 4
+flag:
+	.space 4
 
 
-
-
+//function 1
 
 scan_text:
 //prolog
@@ -52,10 +59,61 @@ tsikl:
 
 finish:
 	movl %ecx, lengthS
-	pushl lengthS
-	pushl $cheker
-	call printf
-	addl $8,%esp
+
+//epilog
+	movl %ebp,%esp
+	popl %ebp
+ret
+
+
+
+//function 2
+
+
+checksv:
+//prolog
+        pushl %ebp
+	movl %esp,%ebp
+
+//main part
+	
+	movl 8(%ebp),%esi
+	
+	movl $0, countA
+	movl $0, counta
+	movl lengthS,%ecx
+myloop2:
+	movl %ecx, ptr
+	lodsb
+	
+	cmpb $65,%al
+	jb go
+	   cmpb $122,%al
+	   ja go
+	   	cmpb $91,%al
+		jb go1
+		   cmpb $97,%al
+		   ja go2
+		   	jmp go
+
+	go2:
+		addl $1,counta
+		jmp go
+	go1:
+		addl $1,countA
+		jmp go
+	go:
+	movl ptr,%ecx
+	loop myloop2
+
+//end of main part 
+	movl counta,%eax
+	movl countA,%ecx
+	cmpl %eax,%ecx
+	je yra
+		movl $0,flag
+
+	yra:
 
 //epilog
 	movl %ebp,%esp
@@ -97,14 +155,25 @@ typing:
 	movl count, %ecx
 loop typing
 
-/*	pushl $ennd
+	pushl $ennd
 	call printf
 	addl $4,%esp
-*/
+
 #end of printstring
 	
 
-
+//check svoistvo
+	movl $1,flag
+	movl $0,%eax	
+	pushl $mytext
+	call checksv
+	addl $4, %esp
+	pushl flag
+	pushl $cheker
+	call printf
+	addl $8,%esp
+	
+//end of checking svoistvo
 
 
 //epilog
