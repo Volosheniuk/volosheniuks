@@ -17,12 +17,12 @@ float *f = (float *)malloc(n*sizeof(float));
 	
 	for (i=0; i<7; i++)
 		scanf("%d", &a[i]);
-	printf("%d\n", sum1(a, n));
 	
 	
 	
 	for (i=0; i<7; i++)
 		scanf("%f", &f[i]);
+	printf("%d\n", sum1(a, n));
 	printf("%.2f\n",sum2(f, n));
 
 return 0;
