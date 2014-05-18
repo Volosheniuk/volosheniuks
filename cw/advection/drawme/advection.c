@@ -23,14 +23,14 @@ void changeme(int N,double hh,double cww){
 	double mmin;
 	double a,b; double cx=1.0;
 //main part of this problem
-	for (j=0;j<N-1;j++){
+	for (j=1;j<N;j++){
 		a = (mas1[j+1]-mas1[j])/hh;
 		b = ( (-1.0 + (j+1)*hh)*mas1[j] - (-1.0 + j*hh)*mas1[j+1] )/hh;
-		mas2[j+1] = a*(-1.0 + (j)*hh + cww*hh/1.0) + b;
+		mas2[j+1] = fabs( a*(-1.0 + (j)*hh + cww*hh/1.0) + b);
 		}
-		a = ((mas1[0]-mas1[N]))/hh;
-		b = ( (-1.0 + (N)*hh)*mas1[N] - (-1.0 + (N)*hh)*mas1[0] )/hh;
-		mas2[0] = a*(-1.0 + N*hh +cww*hh/1.0) + b;	
+	a = ((mas1[0]-mas1[N]))/hh;
+	b = ( (-1.0 + (N)*hh)*mas1[N] - (-1.0 + (N)*hh)*mas1[0] )/hh;
+	mas2[1] = fabs(a*(-1.0 + N*hh +cww*hh/1.0) + b);	
 
 
 }
@@ -46,7 +46,7 @@ int main(){
 	//zabit nyliami
 	int i;
 	xmasx[0]=-1.02;
-	for (i=1;i<N;i++)
+	for (i=1;i<=N;i++)
 		xmasx[i]=xmasx[i-1]+h;
 	xmasx[i]=1.02;
 	for (i=0;i<NMAX+1;i++){
