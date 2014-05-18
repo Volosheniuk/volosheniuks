@@ -9,7 +9,7 @@ wright_otvet1:
 	.string "Kolichestvo edenits %d\n"
 	.text
 wright_otvet2:
-	.string "NOT chislo=%d"
+	.string "NOT chislo=%d\n"
 
 	.globl main
 main:
@@ -49,9 +49,9 @@ count:
 		addl $8,%esp
 		
 
-
+		movl $0,%eax
 		movl	%ebp, %esp
 		popl	%ebp
-		movl $0,%eax
+		
 ret
 		
