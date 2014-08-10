@@ -1,0 +1,23 @@
+              EmulatorX86(help file)
+commands:
+	run  ...
+	   all -- yours as-ler program will be run
+	   number  -- run [number] strings
+	step   run one string
+	report -- save file report.txt(in wich you will 
+		find all movements, you programm have done)
+	show  ...
+		%eax,%ebx,%edx,%esp,%edx-- will show you
+		what this register has
+		name of varible -- will show you what 
+			this varible has, of cours if
+			it is
+	change .1.  .2.
+		1%eax,%ebx,%edx,%esp,%edx,varible
+		2 number or string
+		this will change meaning of .1. to .2.
+	about  about program 
+	help   open help file
+	exit   exit
+	
+
