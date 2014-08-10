@@ -13,11 +13,13 @@ typedef char byte;
 
 long regs[5];
 FILE* file;
-
+int yourcommandflag;//flag parsera 
 byte stack[first_esp+1];
-void init_file(char* filename) {
+int init_file(char* filename) {
 	file = fopen(filename,"r");
-	regs[4] = (long)(stack+first_esp);
+	if (file==NULL) return 13;
+	else regs[4] = (long)(stack+first_esp);
+           return 0;
 }
 long* reg(char* str) {//eax,ebx,ecx,edx,esp
 	switch(str[1]) {
@@ -77,7 +79,7 @@ int size_of(char* type_name) {
 	return -1;
 }
 //
-void specifier(char* type_name, char* dest) {
+void specifier(char* type_name, char* dest ) {
 	if(is(type_name,"int")) {
 		memcpy(dest,"%d",3);return;
 	}
@@ -247,8 +249,7 @@ int jif(char* ifstr) {
 	if(is(ifstr,"jna") || is(ifstr,"jnl")) return !less || equal;
 }
 void __exit() {
-	printf("press any key to exit\n");
-	getchar();
+	printf("running complite!\n");
 	return;
 }
 int isnum(char* op_name) {
@@ -395,19 +396,129 @@ void process_commands() {//obrabotka  komand
 		}
 	}
 }
+
+void parseyourscommand(){
+	char str1[200];
+	printf("hello, EmulatorX86 is working now,");
+	printf("please, run your command!\n");
+	printf("to open help file ,just type help!\n");
+	while (1==yourcommandflag){
+		fgets(str1,sizeof(str1),stdin);
+		char comm[100];
+		sscanf(str1,"%s",comm);
+		if (is(comm,"run")){
+			comm[0]=0;
+			memcpy(str1,str1+3,strlen(str1+3)+1);
+			erase_spaces(comm);
+			sscanf(str1,"%s",comm);
+			if (is(comm,"all")){
+				 process_commands();
+
+			}
+			
+		}
+		else if (is(comm,"report")){
+			/* will be  fixed and commited */				
+			printf("you open report\n");
+
+		}
+		else if (is(comm,"about")){
+			FILE* helpfile;
+			helpfile=fopen("about.txt","r");
+			char helpstr[1000];
+			while(!feof(helpfile)){
+				fgets(helpstr,sizeof(helpstr),helpfile);
+				memcpy(helpstr,helpstr,sizeof(helpstr));
+				printf("%s",helpstr);
+			}
+			fclose(helpfile);			
+		}
+		else if (is(comm,"show")){
+			comm[0]=0;
+			memcpy(str1,str1+4,strlen(str1+4)+1);
+			erase_spaces(comm);
+			sscanf(str1,"%s",comm);
+			if (is(comm,"%eax")) printf(" EAX=%d\n",(int)(regs[0]));
+			else if (is(comm,"%ebx")) printf("EBX=%d\n",(int)(regs[1]));
+			else if (is(comm,"%ecx")) printf("ECX=%d\n",(int)(regs[2]));
+			else if (is(comm,"%edx")) printf("EDX=%d\n",(int)(regs[3]));
+			else if (is(comm,"%esp")) printf("ESP=%d\n",(int)(regs[4]));
+			else{
+				int j=0;
+				int flagf=0;
+				for (;j<last;j++){
+					if (is(comm,names[j])) {
+						if (1==isstring[j]) printf("%s=%s\n",names[j],pointers[j]);
+						else printf("%s=%d\n",names[j],*(int*)pointers[j]);
+						flagf=1;
+						break;
+					}
+				}
+			if (0==flagf) printf ("There is not %s in the as-ler file, try to rewrite!",comm);
+			}
+		}
+		else if (is(comm,"change")){
+			/*here will be part of change*/		
+			printf("you open change\n");
+		}
+		else if (is(comm,"step")){
+			/*here will be step */	
+			printf("you open step\n");
+		}
+		else if (is(comm,"help")){
+			FILE* helpfile;
+			helpfile=fopen("help.txt","r");
+			char helpstr[1000];
+			while(!feof(helpfile)){
+				fgets(helpstr,sizeof(helpstr),helpfile);
+				memcpy(helpstr,helpstr,sizeof(helpstr));
+				printf("%s",helpstr);
+			}
+			fclose(helpfile);
+		}
+		else if (is(comm,"exit")){
+			int s=0;
+			do{
+			printf("Are you shure you want to exit ?(y/n)\n");
+			s=getchar();
+			if ((121==s)||(89==s)) {
+				goto mmyex;
+			}
+			}
+			while ((121==s)||(89==s)||(110==s)||(78==s));
+		 
+		}
+		else printf ("There is no such command, try to open help!\n");
+	
+	str1[0]=0;
+	}
+	mmyex:
+	 printf("good bye!\n");
+}
+
 int main() {
 	int is_data = 0;
+	int fl=13;
 	char str[30],str2[30];
-	init_file("1.txt");
-
+	char myf[30];
+	
+	while (fl==13){
+		printf ("Please,wright the title of as-ler file\n");
+		fgets(myf,sizeof(myf),stdin);
+		myf[strlen(myf)-1]=0;
+		fl=init_file(myf);
+		if (13==fl) printf("There is no such file\n");
+	}
+	
 	fscanf(file,"%s",str);
 	if(is(str,".data"))
 		while(read_var() + 1) ;
 	fscanf(file,"%s%s",str,str2);
-
+	
 	parse_main_into_commands();
-	process_commands();
-	printf("%d",*reg("eax"));
+	yourcommandflag=1;
+	parseyourscommand();
 	getchar();
 }
+
 
