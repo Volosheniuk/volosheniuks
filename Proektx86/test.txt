@@ -1,0 +1,14 @@
+.data
+int1: .string "123a"
+int2: .byte 234
+.text
+.global main:
+	movl $2, %eax
+        movl %eax,%ecx
+	movl $4,%edx
+	addl %edx,%eax
+	movl %eax,%ecx
+	pushl $4
+	popl %eax
+	
+	exit
