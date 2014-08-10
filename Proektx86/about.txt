@@ -1,0 +1,52 @@
+have been solved(last commit):
+	1)users command parser
+		--run all --- is working well
+		--run number(ex run 2) -- will be in next commit
+		--show  (ex show %eax, or show int1)  - is working good
+		--step - will be in next commit
+		--report - do not work, can you give me advice how to make it
+			{i have an idea to do it in such way:
+				to creat file report.txt
+				to write into it such things:
+					text of as-ler programme
+					and after each command write changes
+					(example : movl $4,%eax
+					%eax=...>>%eax=4
+					pushl %eax
+					stack(number)=...)
+			and in the end of report writedown 
+			"After finishig program we have %eax=... etc"
+			} 
+			this part will be easy, and if you say that it is ok
+			i'll commit it.
+		--change -- will be in next commit
+		help	--is working well
+		exit  --is working well
+	else
+	2)you can choose as-ler file  which you want to open
+	3)little changes in process_commands
+
+cheks
+	stack is working well
+	addl,movl,popl,pushl,jmp,je,ja,jb -- are working well
+	
+
+
+problems:
+	1)i have problems with 
+		loop -- it does not work well (will fixed in next commit)
+	2)i would like to have stack report(for example to wright last 10 things in stack)
+	but i do not know how to solve this problem
+	3)problem with calling printf and scanf have not been solved yet(i'll try to write somthing untill next sunday, 
+	if i do not solve it, i'll ask you how to do it)
+	4)problems whit functions
+
+Vasiliy Ivanovich, please, write me what else can be done and how i can solve problems!
+	
+	
+		
+
+	
+
+
+
